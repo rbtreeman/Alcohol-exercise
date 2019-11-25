@@ -1,0 +1,308 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={TIER: Alcohol Reproducibility Exercise},
+            pdfauthor={Jenna R Krall},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{TIER: Alcohol Reproducibility Exercise}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{Processing}
+  \author{Jenna R Krall}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{November 4, 2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{set-up}{%
+\subsection{Set up}\label{set-up}}
+
+\begin{itemize}
+\item
+  Define chunk behavior
+\item
+  Load libraries
+\item
+  Load data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Read in original Stata datafile}
+\CommentTok{# Open the original data set, using a relative path}
+\CommentTok{# to specify that the data file is in the "Original-Data" folder}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{read_dta}\NormalTok{(}\StringTok{"../../Data/OriginalData/04291-0001-Data.dta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-munging}{%
+\subsection{Data munging}\label{data-munging}}
+
+Drop all cases for which the studentâs residence at college is âOff
+campus house/aptâ or âother,â as well as all cases for which the
+variable representing the studentâs residence at college has a missing
+value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Drop all cases for which the student's residence is "Off-campus house/apt"}
+\CommentTok{# or "other," or if variable A6 is missing}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(dat, A6 }\OperatorTok{!=}\StringTok{ }\DecValTok{5}\NormalTok{, A6 }\OperatorTok{!=}\StringTok{ }\DecValTok{6}\NormalTok{, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(A6))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-new-variables}{%
+\subsubsection{Create new variables}\label{create-new-variables}}
+
+New variables include:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{drunk}
+\item
+  \texttt{hsdrunk}
+\item
+  \texttt{free}
+\item
+  \texttt{volfree}
+\item
+  \texttt{housing}
+\item
+  \texttt{health}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(dat, }
+               
+\CommentTok{# Generate a variable "drunk"}
+\CommentTok{# equal to 0 if student got drunk fewer than 3 times in last 30 days}
+\CommentTok{# equal to 1 if student got drunk 3 or more times in last 30 days               }
+  \DataTypeTok{drunk =} \KeywordTok{ifelse}\NormalTok{(C13 }\OperatorTok{>=}\StringTok{ }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }
+    \KeywordTok{ifelse}\NormalTok{(C13 }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DecValTok{0}\NormalTok{, }\OtherTok{NA}\NormalTok{)),}
+    
+\CommentTok{# Generate a variable "hsdrunk"}
+\CommentTok{# equal to 0 if student had 5+ drinks in a row fewer than 3 times in }
+\CommentTok{# senior year of high school}
+\CommentTok{# equal to 1 if student student had 5+ drinks in a row 3 or more times in }
+\CommentTok{# senior year of high school }
+  \DataTypeTok{hsdrunk =} \KeywordTok{ifelse}\NormalTok{(G11 }\OperatorTok{>=}\StringTok{ }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }
+    \KeywordTok{ifelse}\NormalTok{(G11 }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DecValTok{0}\NormalTok{, }\OtherTok{NA}\NormalTok{)), }
+
+\CommentTok{# Generate a variable  "free"}
+\CommentTok{# equal to 1 if student lives in alcohol-free housing}
+\CommentTok{# equal to 0 if student does not live in alcohol-free housing}
+  \DataTypeTok{free =}\NormalTok{ B8, }
+
+\CommentTok{# Generate a variable  "volfree"}
+\CommentTok{# equal to 1 if student lives in alcohol-free housing by request  }
+\CommentTok{# equal to 0 if student was assigned to live in alcohol-free housing}
+  \DataTypeTok{volfree =} \KeywordTok{ifelse}\NormalTok{(free }\OperatorTok{==}\StringTok{ }\DecValTok{1} \OperatorTok{&}\StringTok{ }\NormalTok{B9 }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\KeywordTok{ifelse}\NormalTok{(free }\OperatorTok{==}\StringTok{ }\DecValTok{1} \OperatorTok{&}\StringTok{ }\NormalTok{B9 }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\OtherTok{NA}\NormalTok{)),}
+
+\CommentTok{# Genereate a variable "housing"}
+\CommentTok{# equal to 1 if student does not live in alcohol-free housing}
+\CommentTok{# equal to 2 if student was assigned to live in alcohol-free housing}
+\CommentTok{# equal to 3 if all campus housing is alcohol-free}
+\CommentTok{# equal to 4 if student lives in alcohol-free housing by request}
+  \DataTypeTok{housing =} \KeywordTok{ifelse}\NormalTok{(free }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }
+      \KeywordTok{ifelse}\NormalTok{(free }\OperatorTok{==}\StringTok{ }\DecValTok{1} \OperatorTok{&}\StringTok{ }\NormalTok{B9 }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }
+      \KeywordTok{ifelse}\NormalTok{(free }\OperatorTok{==}\StringTok{ }\DecValTok{1} \OperatorTok{&}\StringTok{ }\NormalTok{B9 }\OperatorTok{==}\StringTok{ }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }
+      \KeywordTok{ifelse}\NormalTok{(volfree }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\OtherTok{NA}\NormalTok{)))),}
+
+\CommentTok{# Generate a variable "health"}
+\CommentTok{# indicating student's self-reported health status }
+\CommentTok{# on a scale of 1 (Excellent) to 5 (Poor)}
+   \DataTypeTok{health =}\NormalTok{ G6)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{format-final-dataset}{%
+\subsubsection{Format final dataset}\label{format-final-dataset}}
+
+\begin{itemize}
+\tightlist
+\item
+  Drop all variables other than the six that were just created.\\
+\item
+  Drop all cases for which the values of \texttt{drunk},
+  \texttt{hsdrunk}, or \texttt{housing} are missing.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Drop all variables except the six created by the preceding commands}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{select}\NormalTok{(dat, drunk, hsdrunk, free, volfree, housing, health)}
+
+\CommentTok{# DROP CASES WITH MISSING VALUES OF KEY VARIABLES}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(dat, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(drunk), }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(hsdrunk), }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(housing))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{label-variables}{%
+\subsubsection{Label variables}\label{label-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Label the values of "health"}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(dat, }\DataTypeTok{health =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(health),}
+      \StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "Excellent"}\NormalTok{, }\StringTok{`}\DataTypeTok{2}\StringTok{`}\NormalTok{ =}\StringTok{ "Very Good"}\NormalTok{, }\StringTok{`}\DataTypeTok{3}\StringTok{`}\NormalTok{ =}\StringTok{ "Good"}\NormalTok{, }\StringTok{`}\DataTypeTok{4}\StringTok{`}\NormalTok{ =}\StringTok{ "Fair"}\NormalTok{, }
+      \StringTok{`}\DataTypeTok{5}\StringTok{`}\NormalTok{ =}\StringTok{ "Poor"}\NormalTok{), }
+      \CommentTok{# Label the values of "drunk"}
+      \DataTypeTok{drunk =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(drunk), }\StringTok{`}\DataTypeTok{0}\StringTok{`}\NormalTok{ =}\StringTok{ "2 or fewer"}\NormalTok{, }\StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "3 or more"}\NormalTok{),}
+      \CommentTok{# Label the values of "hsdrunk"}
+      \DataTypeTok{hsdrunk =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(hsdrunk), }\StringTok{`}\DataTypeTok{0}\StringTok{`}\NormalTok{ =}\StringTok{ "2 or fewer"}\NormalTok{, }\StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "3 or more"}\NormalTok{),}
+      \CommentTok{# Label the values of "free"}
+      \DataTypeTok{free =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(free), }\StringTok{`}\DataTypeTok{0}\StringTok{`}\NormalTok{ =}\StringTok{ "No"}\NormalTok{, }\StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "Yes"}\NormalTok{),}
+      \CommentTok{# Label the values of "volfree"}
+      \DataTypeTok{volfree =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(volfree), }\StringTok{`}\DataTypeTok{0}\StringTok{`}\NormalTok{ =}\StringTok{ "No"}\NormalTok{, }\StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "Yes"}\NormalTok{),}
+      \CommentTok{# Label the values of "housing_category"}
+      \DataTypeTok{housing =} \KeywordTok{recode}\NormalTok{(}\KeywordTok{factor}\NormalTok{(housing), }\StringTok{`}\DataTypeTok{1}\StringTok{`}\NormalTok{ =}\StringTok{ "Not alchohol free"}\NormalTok{,}
+              \StringTok{`}\DataTypeTok{2}\StringTok{`}\NormalTok{ =}\StringTok{ "Assigned to alcohol-free housing"}\NormalTok{, }
+              \StringTok{`}\DataTypeTok{3}\StringTok{`}\NormalTok{ =}\StringTok{ "All campus housing alcohol-free"}\NormalTok{, }
+              \StringTok{`}\DataTypeTok{4}\StringTok{`}\NormalTok{ =}\StringTok{ "Requested alcohol-free housing"}\NormalTok{)}
+\NormalTok{      )}
+
+
+\CommentTok{# label variable health "Health Rating"}
+\CommentTok{# label variable drunk "Times drunk past 30 days"}
+\CommentTok{# label variable hsdrunk "Times had 5+ drinks senior year of high school"}
+\CommentTok{# label variable alcfree "Live in alcohol-free housing"}
+\CommentTok{# label variable volalcfree "Requested alcohol-free housing"}
+\CommentTok{# label variable housing_category "Housing type"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{save-analysis-dataset}{%
+\subsection{Save analysis dataset}\label{save-analysis-dataset}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Save the modified data in a file called "analysis.RData"}
+\CommentTok{# Use a relative directory path to make sure "analysis.RData" is saved}
+    \CommentTok{#in the "Data" folder}
+\KeywordTok{save}\NormalTok{(dat, }\DataTypeTok{file =} \StringTok{"../../Data/AnalysisData/analysis.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

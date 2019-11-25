@@ -1,0 +1,271 @@
+---
+title: "TIER: Alcohol Reproducibility Exercise"
+subtitle: "Data Appendix"
+author: "Jenna R Krall"
+date: "November 4, 2019"
+output: html_document
+---
+
+The data for this exercise were taken from a file called 04291—001-Data.dta, which is part of ICPSR Study Number 4291. We modified that original data file to create the analysis data file analysis.RData that was used to generate the figures for this exercise.
+
+Each observation in analysis.RData represents one student who responded to the alcohol survey. There are five variables in this data file: drunk, hsdrunk, free, volfree, and housing. Details on the definitions, coding and distributions of these five variables are provided below.
+
+
+```{r setup, include=FALSE}
+# By default, omit warnings and messages
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+
+# Load libraries
+library(tidyverse)
+```
+
+
+```{r load-data}
+# Read in the cleaned analysis datafile using a relative path
+# to specify that the data file is in the "Analysis-Data" folder
+load("../../Data/AnalysisData/analysis.RData")
+```
+
+
+# Variable name: `drunk`
+
+Dummy variable indicating whether respondent reports having been drunk three or
+more times in the last thirty days.
+
+**Definition:** Dummy variable indicating whether respondent reports having been drunk three or
+more times in the last thirty days.
+
+**Possible values:** 0, 1.
+
+**Coding:** 
+
+- 0: Respondent reports being drunk fewer than three times in the last thirty days.
+- 1: Respondent reports being drunk three or more times in the last thirty days.
+
+**Missing observations:** 
+
+
+```{r}
+countdat <- count(dat, drunk)
+na <- filter(countdat, is.na(drunk)) %>% select(., n) %>% nrow()
+```
+
+Missing observations: `r na`
+
+```{r}
+nr <- nrow(dat)
+```
+
+Total observations: `r nr`
+
+
+**Frequency table:**
+
+```{r}
+countdat <- mutate(countdat, prop = round(n / sum(n), 2))
+countdat
+```
+
+**Bar chart showing percent frequency distribution:**
+
+```{r}
+ggplot(dat, aes(x = drunk)) + 
+   ylab("Frequency") +
+   geom_bar(aes(y = (..count..)/sum(..count..))) 
+```
+
+
+# Variable name: `hsdrunk`
+
+**Definition:** Dummy variable indicating whether respondent reports having had five or more
+drinks in a row on three or more occasions during senior year of high school.
+
+**Possible values:** 0, 1.
+
+**Coding:**
+
+- 0: Respondent reports having had five or more drinks in a row on fewer than three occasions during senior year of high school.
+- 1: Respondent reports having had five or more drinks in a row on three or more occasions during senior year of high school.
+
+
+**Missing observations:** 
+
+
+```{r}
+countdat <- count(dat, hsdrunk)
+na <- filter(countdat, is.na(hsdrunk)) %>% select(., n) %>% nrow()
+
+```
+
+Missing observations: `r na`
+
+
+```{r}
+nr <- nrow(dat)
+```
+
+Total observations: `r nr`
+
+
+**Frequency table:**
+
+```{r}
+countdat <- mutate(countdat, prop = round(n / sum(n), 2))
+countdat
+```
+
+**Bar chart showing percent frequency distribution:**
+
+```{r}
+ggplot(dat, aes(x = hsdrunk)) + 
+   ylab("Frequency") +
+   geom_bar(aes(y = (..count..)/sum(..count..))) 
+```
+
+
+# Variable name: `free`
+
+
+**Definition:** Dummy variable indicating whether respondent reports living in alcohol-free
+housing.
+
+**Possible values:** 0, 1.
+
+**Coding:**
+
+- 0: Respondent reports not living in alcohol-free housing.
+- 1: Respondent reports living in alcohol-free housing.
+
+
+
+
+**Missing observations:** 
+
+
+```{r}
+countdat <- count(dat, free)
+na <- filter(countdat, is.na(free)) %>% select(., n) %>% nrow()
+
+```
+
+Missing observations: `r na`
+
+
+```{r}
+nr <- nrow(dat)
+```
+
+Total observations: `r nr`
+
+
+**Frequency table:**
+
+```{r}
+countdat <- mutate(countdat, prop = round(n / sum(n), 2))
+countdat
+```
+
+**Bar chart showing percent frequency distribution:**
+
+```{r}
+ggplot(dat, aes(x = free)) + 
+   ylab("Frequency") +
+   geom_bar(aes(y = (..count..)/sum(..count..))) 
+```
+
+
+
+
+# Variable name: `volfree`
+
+**Definition:** Dummy variable defined only for individuals living in alcohol-free housing (free=1), indicating whether respondent reports requesting to live in alcohol-free housing or being assigned to live in alcohol-free housing.
+
+**Possible values:** 0, 1.
+
+**Coding:** 
+
+- 0: Respondent reports being assigned to live in alcohol-free housing.
+- 1: Respondent reports requesting to live in alcohol-free housing.
+
+**Missing observations:**
+
+- This variable is defined for the 289 observations for which `free`=1. There are no missing values of `volfree` among these observations.
+- For the 2428 observations for which `free`=0, this variable is not defined.
+
+
+
+
+```{r}
+# remove undefined
+datvol <- filter(dat, !is.na(volfree))
+countdat <- count(datvol, volfree)
+
+```
+
+**Frequency table:**
+
+```{r}
+countdat <- mutate(countdat, prop = round(n / sum(n), 2))
+countdat
+```
+
+**Bar chart showing percent frequency distribution:**
+
+```{r}
+ggplot(datvol, aes(x = volfree)) + 
+   ylab("Frequency") +
+   geom_bar(aes(y = (..count..)/sum(..count..))) 
+```
+
+
+
+# Variable name: `housing`
+
+
+**Definition:** Categorical variable indicating type of housing student reports living in. 
+
+**Possible values:** 1, 2, 3, 4
+
+**Coding:** 
+
+- 1: Respondent reports not living in alcohol-free housing.
+- 2: Respondent reports being assigned to live in alcohol-free housing. 
+- 3: Respondent reports all campus housing is alcohol-free.
+- 4: Respondent reports requesting to live in alcohol-free housing.
+
+**Missing observations:** 
+
+
+```{r}
+countdat <- count(dat, housing)
+na <- filter(countdat, is.na(housing)) %>% select(., n) %>% nrow()
+
+```
+
+Missing observations: `r na`
+
+
+```{r}
+nr <- nrow(dat)
+```
+
+Total observations: `r nr`
+
+
+**Frequency table:**
+
+```{r}
+countdat <- mutate(countdat, prop = round(n / sum(n), 2))
+countdat
+```
+
+**Bar chart showing percent frequency distribution:**
+
+```{r}
+ggplot(dat, aes(x = housing)) + 
+   ylab("Frequency") +
+   geom_bar(aes(y = (..count..)/sum(..count..))) +
+   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+

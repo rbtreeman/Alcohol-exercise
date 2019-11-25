@@ -1,0 +1,163 @@
+---
+title: 'TIER: Alcohol Reproducibility Exercise'
+author: "Jenna R Krall"
+date: "November 4, 2019"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: Processing
+---
+
+
+
+## Set up
+
+- Define chunk behavior
+- Load libraries
+
+```{r setup, include=FALSE}
+# Load libraries
+library(tidyverse)
+library(haven)
+```
+
+- Load data
+
+
+```{r load-data}
+# Read in original Stata datafile
+# Open the original data set, using a relative path
+# to specify that the data file is in the "Original-Data" folder
+dat <- read_dta("../../Data/OriginalData/04291-0001-Data.dta")
+```
+
+## Data munging
+
+
+Drop all cases for which the student’s residence at college is “Off campus house/apt” or “other,” as well as all cases for which the variable representing the student’s residence at college has a missing value.
+
+```{r drop-missing}
+# Drop all cases for which the student's residence is "Off-campus house/apt"
+# or "other," or if variable A6 is missing
+dat <- filter(dat, A6 != 5, A6 != 6, !is.na(A6))
+
+```
+
+### Create new variables
+
+New variables include:
+
+- `drunk`
+- `hsdrunk`
+- `free`
+- `volfree`
+- `housing`
+- `health`
+
+```{r create-new-variables}
+
+
+dat <- mutate(dat, 
+               
+# Generate a variable "drunk"
+# equal to 0 if student got drunk fewer than 3 times in last 30 days
+# equal to 1 if student got drunk 3 or more times in last 30 days               
+  drunk = ifelse(C13 >= 3, 1, 
+    ifelse(C13 %in% c(1, 2), 0, NA)),
+    
+# Generate a variable "hsdrunk"
+# equal to 0 if student had 5+ drinks in a row fewer than 3 times in 
+# senior year of high school
+# equal to 1 if student student had 5+ drinks in a row 3 or more times in 
+# senior year of high school 
+  hsdrunk = ifelse(G11 >= 3, 1, 
+    ifelse(G11 %in% c(1, 2), 0, NA)), 
+
+# Generate a variable  "free"
+# equal to 1 if student lives in alcohol-free housing
+# equal to 0 if student does not live in alcohol-free housing
+  free = B8, 
+
+# Generate a variable  "volfree"
+# equal to 1 if student lives in alcohol-free housing by request  
+# equal to 0 if student was assigned to live in alcohol-free housing
+  volfree = ifelse(free == 1 & B9 == 1, 1, ifelse(free == 1 & B9 == 2, 0, NA)),
+
+# Genereate a variable "housing"
+# equal to 1 if student does not live in alcohol-free housing
+# equal to 2 if student was assigned to live in alcohol-free housing
+# equal to 3 if all campus housing is alcohol-free
+# equal to 4 if student lives in alcohol-free housing by request
+  housing = ifelse(free == 0, 1, 
+      ifelse(free == 1 & B9 == 2, 2, 
+      ifelse(free == 1 & B9 == 3, 3, 
+      ifelse(volfree == 1, 4, NA)))),
+
+# Generate a variable "health"
+# indicating student's self-reported health status 
+# on a scale of 1 (Excellent) to 5 (Poor)
+   health = G6)
+```
+
+### Format final dataset
+
+- Drop all variables other than the six that were just created.  
+- Drop all cases for which the values of `drunk`, `hsdrunk`, or `housing` are missing.
+
+```{r format-file}
+
+# Drop all variables except the six created by the preceding commands
+dat <- select(dat, drunk, hsdrunk, free, volfree, housing, health)
+
+# DROP CASES WITH MISSING VALUES OF KEY VARIABLES
+dat <- filter(dat, !is.na(drunk), !is.na(hsdrunk), !is.na(housing))
+
+```
+
+
+### Label variables
+
+```{r label-variables}
+
+
+# Label the values of "health"
+dat <- mutate(dat, health = recode(factor(health),
+      `1` = "Excellent", `2` = "Very Good", `3` = "Good", `4` = "Fair", 
+      `5` = "Poor"), 
+      # Label the values of "drunk"
+      drunk = recode(factor(drunk), `0` = "2 or fewer", `1` = "3 or more"),
+      # Label the values of "hsdrunk"
+      hsdrunk = recode(factor(hsdrunk), `0` = "2 or fewer", `1` = "3 or more"),
+      # Label the values of "free"
+      free = recode(factor(free), `0` = "No", `1` = "Yes"),
+      # Label the values of "volfree"
+      volfree = recode(factor(volfree), `0` = "No", `1` = "Yes"),
+      # Label the values of "housing_category"
+      housing = recode(factor(housing), `1` = "Not alchohol free",
+              `2` = "Assigned to alcohol-free housing",	
+              `3` = "All campus housing alcohol-free", 
+              `4` = "Requested alcohol-free housing")
+      )
+
+
+# label variable health "Health Rating"
+# label variable drunk "Times drunk past 30 days"
+# label variable hsdrunk "Times had 5+ drinks senior year of high school"
+# label variable alcfree "Live in alcohol-free housing"
+# label variable volalcfree "Requested alcohol-free housing"
+# label variable housing_category "Housing type"
+
+
+```
+
+## Save analysis dataset
+
+```{r save-analysis-data}
+# Save the modified data in a file called "analysis.RData"
+# Use a relative directory path to make sure "analysis.RData" is saved
+	#in the "Data" folder
+save(dat, file = "../../Data/AnalysisData/analysis.RData")
+```
+
